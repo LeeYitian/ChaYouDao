@@ -13,7 +13,7 @@
         'text-bg-success': singleMsg.success
       }"
     >
-      <strong class="me-auto">{{ singleMsg.title }}</strong>
+      <strong class="me-auto">{{ singleMsg.event }}</strong>
     </div>
     <div class="toast-body" :class="{ 'text-muted': !singleMsg.message }">
       {{ fullMessage }}

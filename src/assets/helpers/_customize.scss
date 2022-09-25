@@ -50,3 +50,9 @@
     }
   }
 }
+.updateCoupon, .updateArticle{
+  .form-check-input:checked{
+    background-color: $darkgreen;
+    border-color: $darkgreen;
+  }
+}

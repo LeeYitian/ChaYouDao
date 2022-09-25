@@ -41,23 +41,30 @@
     </button>
   </div>
   <PaginationBar v-bind="pagination"></PaginationBar>
+  <UpdateOrderModal :temp-info="tempOrder"></UpdateOrderModal>
+  <DeleteModal :temp-info="tempOrder"></DeleteModal>
 </template>
 
 <script>
 import checkToken from '@/mixins/checkToken.js'
-import PaginationBar from '@/components/PaginationBar.vue'
+import UpdateOrderModal from '@/components/UpdateOrderModal.vue'
+import DeleteModal from '@/components/DeleteModal.vue'
 
 export default {
   mixins: [checkToken],
   emits: ['loading'],
+  inject: ['emitter'],
   data() {
     return {
       orders: [],
-      pagination: {}
+      pagination: {},
+      tempOrder: {},
+      isNew: false
     }
   },
   components: {
-    PaginationBar
+    UpdateOrderModal,
+    DeleteModal
   },
   methods: {
     getOrders(page = 1) {
@@ -66,6 +73,11 @@ export default {
       this.$http.get(url).then((res) => {
         this.orders = res.data.orders
         this.pagination = res.data.pagination
+        const toastMsg = {
+          ...res.data,
+          event: '取得訂單列表'
+        }
+        this.emitter.emit('toastMsg', toastMsg)
         this.$emit('loading', false)
       })
     }

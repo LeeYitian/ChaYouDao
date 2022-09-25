@@ -19,7 +19,7 @@
           ></button>
         </div>
         <div class="modal-body">
-          <p>刪除商品： {{tempDelete.title}}（刪除後將無法復原）</p>
+          <p>刪除： {{tempInfo.title}}（刪除後將無法復原）</p>
         </div>
         <div class="modal-footer">
           <button
@@ -40,12 +40,12 @@
 import modal from '@/mixins/modalMixin.js'
 export default {
   mixins: [modal],
-  props: ['tempDelete'],
+  props: ['tempInfo'],
   methods: {
     emit() {
-      const deleteProduct = { ...this.tempDelete }
+      const deleteInfo = { ...this.tempInfo }
       this.hideModal()
-      this.$emit('deleteProduct', deleteProduct)
+      this.$emit('deleteInfo', deleteInfo)
     }
   }
 }

@@ -10,12 +10,12 @@
     <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content border-0">
         <div class="modal-header bg-primary text-white">
-          <h5 class="modal-title" id="exampleModalLabel">
-            <span>新增產品</span>
+          <h5 class="modal-title">
+            <span>新增／修改產品</span>
           </h5>
           <button
             type="button"
-            class="btn-close bg-lightbrown"
+            class="btn-close btn-close-white"
             @click="dismiss"
             aria-label="Close"
           ></button>
@@ -56,23 +56,11 @@
                   :src="temp.mainImgUrl || temp.mainImgLocal"
                   alt=""
                 />
-                <svg
+                <i
                   @click.stop="removeUpload"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="30"
-                  height="30"
-                  fill="currentColor"
                   class="position-absolute top-0 start-100 translate-middle bi bi-x-circle"
                   data-fun="url"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
-                  />
-                  <path
-                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"
-                  />
-                </svg>
+                ></i>
               </div>
 
               <!-- 多圖 -->
@@ -116,21 +104,9 @@
                   <div v-for="i in minorImgAll" :key="i" class="col-3">
                     <div class="position-relative img-pre">
                       <img class="img-fluid" id="previews" :src="i" alt="" />
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        fill="currentColor"
+                      <i
                         class="position-absolute top-0 start-100 translate-middle bi bi-x-circle"
-                        viewBox="0 0 16 16"
-                      >
-                        <path
-                          d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
-                        />
-                        <path
-                          d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"
-                        />
-                      </svg>
+                      ></i>
                     </div>
                   </div>
                 </div>
@@ -165,7 +141,6 @@
                     class="form-control"
                     id="category"
                     placeholder="請輸入分類"
-
                   />
                 </div>
                 <div class="mb-3 col-md-6">
@@ -176,7 +151,6 @@
                     class="form-control"
                     id="unit"
                     placeholder="請輸入單位"
-
                   />
                 </div>
               </div>
@@ -188,9 +162,9 @@
                     v-model="product.origin_price"
                     type="number"
                     class="form-control"
+                    min="0"
                     id="origin_price"
                     placeholder="請輸入原價"
-
                   />
                 </div>
                 <div class="mb-3 col-md-6">
@@ -199,9 +173,9 @@
                     v-model="product.price"
                     type="number"
                     class="form-control"
+                    min="0"
                     id="price"
                     placeholder="請輸入售價"
-
                   />
                 </div>
               </div>
@@ -306,9 +280,6 @@ export default {
   },
   methods: {
     dismiss() {
-      this.product = {}
-      this.temp.mainImgUrl = ''
-      this.temp.minorImgUrls = ''
       this.hideModal()
     },
     createImgUrl(e) {
@@ -448,6 +419,10 @@ export default {
       }
     },
     emit() {
+      if (this.product.price < 0 || this.product.origin_price < 0) {
+        alert('價錢不得為負數')
+        return
+      }
       const updateProduct = { ...this.product }
       this.$emit('update-product', updateProduct)
       this.hideModal()

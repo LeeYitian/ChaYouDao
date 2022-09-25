@@ -20,15 +20,15 @@
         <div class="navbar-nav w-100">
           <router-link
             to="/dashboard/products"
-            class="nav-link text-primary"
+            class="nav-link"
             aria-current="page"
             >產品管理</router-link
           >
-          <router-link to="/dashboard/orders" class="nav-link text-primary">訂單管理</router-link>
-          <router-link to="/dashboard/coupons" class="nav-link text-primary">優惠券管理</router-link>
-          <router-link to="/dashboard/articles" class="nav-link text-primary">文章管理</router-link>
+          <router-link to="/dashboard/orders" class="nav-link">訂單管理</router-link>
+          <router-link to="/dashboard/coupons" class="nav-link">優惠券管理</router-link>
+          <router-link to="/dashboard/articles" class="nav-link">文章管理</router-link>
           <a
-            class="nav-link text-primary ms-auto"
+            class="nav-link ms-auto"
             href="#"
             @click.prevent="logout"
             >登出</a

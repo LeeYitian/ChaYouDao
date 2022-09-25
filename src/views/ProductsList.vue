@@ -53,21 +53,20 @@
     </div>
   </div>
   <PaginationBar v-bind="pagination"></PaginationBar>
-  <UpdateModal
+  <UpdateProductModal
     :temp-info="tempProduct"
     @update-product="update"
-    ref="updateModal"
-  ></UpdateModal>
+    ref="updateProductModal"
+  ></UpdateProductModal>
   <DeleteModal
-    :temp-delete="tempProduct"
-    @delete-product="erase"
+    :temp-info="tempProduct"
+    @delete-info="erase"
     ref="deleteModal"
   ></DeleteModal>
 </template>
 
 <script>
-import PaginationBar from '@/components/PaginationBar.vue'
-import UpdateModal from '@/components/UpdateModal.vue'
+import UpdateProductModal from '@/components/UpdateProductModal.vue'
 import DeleteModal from '@/components/DeleteModal.vue'
 import checkToken from '@/mixins/checkToken.js'
 
@@ -84,8 +83,7 @@ export default {
     }
   },
   components: {
-    PaginationBar,
-    UpdateModal,
+    UpdateProductModal,
     DeleteModal
   },
   methods: {
@@ -97,7 +95,7 @@ export default {
         this.pagination = res.data.pagination
         const toastMsg = {
           ...res.data,
-          title: '取得產品列表'
+          event: '取得產品列表'
         }
         this.emitter.emit('toastMsg', toastMsg)
         this.$emit('loading', false)
@@ -123,7 +121,7 @@ export default {
         this.$emit('loading', false)
         const toastMsg = {
           ...res.data,
-          title: '新增／更新產品資料'
+          event: '新增／更新產品資料'
         }
         this.emitter.emit('toastMsg', toastMsg)
         this.getProducts()
@@ -136,7 +134,7 @@ export default {
         this.$emit('loading', false)
         const toastMsg = {
           ...res.data,
-          title: '刪除產品資料'
+          event: '刪除產品資料'
         }
         this.emitter.emit('toastMsg', toastMsg)
         this.getProducts()
@@ -147,7 +145,7 @@ export default {
         ? (this.isNew = false)
         : (this.isNew = true)
       this.tempProduct = info
-      this.$refs.updateModal.showModal()
+      this.$refs.updateProductModal.showModal()
     },
     deleteProduct(info) {
       this.tempProduct = info
