@@ -1,7 +1,11 @@
 <template>
   <ManagementNavbar></ManagementNavbar>
   <router-view @loading="changeLoading"></router-view>
-  <loadingComponent :active="isLoading" loader="bars" background-color="#333"></loadingComponent>
+  <loadingComponent
+    :active="isLoading"
+    loader="bars"
+    background-color="#333"
+  ></loadingComponent>
   <NotificationToast></NotificationToast>
 </template>
 

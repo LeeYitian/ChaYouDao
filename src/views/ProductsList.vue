@@ -12,7 +12,7 @@
         <thead class="border-bottom border-primary border-2 bg-lightbrown">
           <tr>
             <th width="120">分類</th>
-            <th>產品名稱</th>
+            <th width="120">產品名稱</th>
             <th width="120">原價</th>
             <th width="120">售價</th>
             <th width="100">啟用</th>
@@ -52,7 +52,7 @@
       </table>
     </div>
   </div>
-  <PaginationBar v-bind="pagination"></PaginationBar>
+  <PaginationBar v-bind="pagination" @page="getProducts"></PaginationBar>
   <UpdateProductModal
     :temp-info="tempProduct"
     @update-product="update"

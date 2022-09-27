@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-lightbrown position-absolute top-0 bottom-0 start-0 end-0 login-page">
+  <div class="position-absolute top-0 bottom-0 start-0 end-0 login-page">
     <div class="container position-absolute top-50 start-50 translate-middle">
       <h1 class="text-primary text-center fw-bold mb-5"><span class="material-symbols-outlined me-1">
           temp_preferences_eco </span
@@ -39,7 +39,7 @@
       </form>
     </div>
   </div>
-  <loadingComponent :active="isLoading" loader="bars" background-color="#745B3F"></loadingComponent>
+  <loadingComponent :active="isLoading" loader="bars" background-color="#576B18"></loadingComponent>
 </template>
 
 <script>

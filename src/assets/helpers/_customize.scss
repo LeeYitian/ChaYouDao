@@ -1,57 +1,83 @@
 .login-page {
+  &::before {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 100%;
+    background: {
+      image: url('./assets/img/01_Leaf_Pattern_generated.jpg');
+      size: 400px 400px;
+      repeat: repeat;
+    }
+    filter: saturate(1.5) opacity(0.2)
+  }
+
   .material-symbols-outlined {
     font-size: inherit;
     font-variation-settings:
-    'FILL' 1,
+      'FILL' 1,
   }
 }
-.manage-nav{
+
+.manage-nav {
   .material-symbols-outlined {
     font-variation-settings:
-    'FILL' 1,
-    'wght' 400,
-    'GRAD' 0,
-    'opsz' 48
+      'FILL' 1,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 48
   }
+
   .navbar-toggler-icon {
     width: 1em;
     height: 1em;
   }
 }
-.dashboard-table{
-  th{
+
+.dashboard-table {
+  th {
     word-break: keep-all;
-    &:first-of-type{
+
+    &:first-of-type {
       border-radius: 0.25rem 0 0 0;
     }
-    &:last-of-type{
+
+    &:last-of-type {
       border-radius: 0 0.25rem 0 0;
     }
   }
 }
-#myModal{
-  div.img-pre{
-    border:2px dashed #dee2e6;
+
+#productModal {
+  div.img-pre {
+    border: 2px dashed #dee2e6;
     width: fit-content;
   }
-  #preview{
+
+  #preview {
     height: 200px;
     object-fit: contain;
   }
-  #previews{
+
+  #previews {
     height: 100px;
     object-fit: contain;
   }
-  .bi-x-circle{
+
+  .bi-x-circle {
     color: $danger;
     cursor: pointer;
-    &:hover, &:active{
+
+    &:hover,
+    &:active {
       color: $warning;
     }
   }
 }
-.updateCoupon, .updateArticle{
-  .form-check-input:checked{
+
+.updateCoupon,
+.updateArticle {
+  .form-check-input:checked {
     background-color: $darkgreen;
     border-color: $darkgreen;
   }

@@ -1,7 +1,7 @@
 <template>
   <div
     class="modal fade modal-xl"
-    id="myModal"
+    id="productModal"
     tabindex="-1"
     aria-labelledby="staticBackdropLabel"
     aria-hidden="true"
@@ -115,6 +115,7 @@
                 <button
                   class="btn btn-outline-primary btn-sm d-block w-100"
                   @click="uploadAllImg"
+                  :disabled="imgUploading"
                 >
                   上傳圖片
                 </button>
@@ -233,6 +234,7 @@
             data-bs-title="請記得點選上傳圖片"
             class="btn btn-primary"
             @click="emit"
+            :disabled="imgUploading"
           >
             確認
           </button>
@@ -251,6 +253,7 @@ export default {
   props: ['tempInfo'],
   data() {
     return {
+      imgUploading: false,
       temp: {
         mainImgUrl: '',
         mainImgLocal: '',
@@ -267,19 +270,23 @@ export default {
     }
   },
   watch: {
-    temp() {
-      if (!this.temp.mainUrl.includes('http')) {
-        alert('請確認網址是否正確')
-      }
-    },
     tempInfo(n, o) {
       this.product = { ...n }
+      if (this.product.imagesUrl) {
+        this.temp.minorImgUrls = [...this.product.imagesUrl]
+      }
       this.temp.mainImgUrl = this.product.imageUrl || ''
-      this.temp.minorImgUrls = this.product.imagesUrl || []
     }
   },
   methods: {
     dismiss() {
+      this.temp = {
+        mainImgUrl: '',
+        mainImgLocal: '',
+        minorImgUrls: [],
+        minorFileList: [],
+        minorImgLocals: []
+      }
       this.hideModal()
     },
     createImgUrl(e) {
@@ -293,9 +300,6 @@ export default {
     minorImgUrlUpload(e) {
       if (this.$refs.minorInputUrl.children[0].value === '') {
         return
-      } else if (!this.$refs.minorInputUrl.children[0].value.includes('http')) {
-        alert('請確認網址是否正確')
-        return
       } else if (
         this.temp.minorImgUrls.length + this.temp.minorImgLocals.length >
         5
@@ -304,6 +308,13 @@ export default {
         return
       }
       this.temp.minorImgUrls.push(e.currentTarget.value)
+      if (this.temp.minorImgUrls.length > 5) {
+        alert('次要圖片上傳總張數為5張（含網址上傳及檔案上傳）')
+        this.temp.minorImgUrls.pop()
+        const inputs = document.getElementsByClassName('minorInputUrl')
+        inputs[inputs.length - 1].value = ''
+        return
+      }
       // 新增網址輸入框
       const newInput = this.$refs.minorInputUrl.cloneNode(true)
       newInput.children[0].value = ''
@@ -327,6 +338,7 @@ export default {
         file.url = url
         this.temp.minorFileList.push(file)
       }
+      e.currentTarget.value = ''
     },
     removeUpload(e) {
       if (e.currentTarget.dataset.fun === 'url') {
@@ -346,7 +358,7 @@ export default {
             this.temp.minorImgUrls.splice(index, 1)
             e.target.parentNode.remove()
             break
-          case 'svg':
+          case 'I':
             src = e.target.previousSibling.getAttribute('src')
             if (this.temp.minorImgUrls.indexOf(src) >= 0) {
               index = this.temp.minorImgUrls.indexOf(src)
@@ -371,22 +383,14 @@ export default {
       }
     },
     uploadAllImg() {
+      this.imgUploading = true
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`
-
-      if (this.temp.mainImgLocal !== '') {
+      const allImgPromise = []
+      if (this.temp.mainImgLocal) {
         const data = new FormData()
         const file = this.$refs.inputMain.files[0]
         data.append('file-to-upload', file)
-        this.$http
-          .post(url, data)
-          .then((res) => {
-            console.log('主要', res.data)
-            this.product.imageUrl = res.data.imageUrl
-            // free memory
-            URL.revokeObjectURL(this.temp.mainImgLocal)
-            this.temp.mainImgLocal = ''
-          })
-          .catch((e) => console.log('主要', e.response.data.message))
+        allImgPromise.push(this.$http.post(url, data))
       } else {
         this.product.imageUrl = this.temp.mainImgUrl
         this.temp.mainImgUrl = ''
@@ -399,24 +403,50 @@ export default {
           data.append('files-to-upload', i.file)
           minorPromise.push(this.$http.post(url, data))
         })
-        Promise.all(minorPromise)
-          .then((res) => {
-            console.log('次要', res)
+        const minor = Promise.all(minorPromise)
+        allImgPromise.push(minor)
+      } else {
+        this.product.imagesUrl = [...this.temp.minorImgUrls]
+        this.temp.minorImgUrls = []
+        const inputs = document.getElementsByClassName('minorInputUrl')
+        for (let i = 0; i <= inputs.length - 2; i++) {
+          inputs[i].parentNode.remove()
+        }
+        this.imgUploading = false
+      }
+      Promise.all(allImgPromise).then((res) => {
+        for (const i of res) {
+          if (Array.isArray(i)) {
+            // minorImg
+            this.product.imagesUrl = []
             if (this.temp.minorImgUrls.length > 0) {
               this.product.imagesUrl = [...this.temp.minorImgUrls]
             }
-            res.forEach((i) => this.prodict.imageUrls.push(i.data.imageUrl))
+            i.forEach((i) => {
+              this.product.imagesUrl.push(i.data.imageUrl)
+            })
             // free memory
             this.temp.minorImgLocals.forEach((i) => URL.revokeObjectURL(i))
-            this.temp.minorImgLocals = ''
-            this.temp.minorImgUrls = ''
+            this.temp.minorImgLocals = []
+            this.temp.minorImgUrls = []
+            const inputs = document.getElementsByClassName('minorInputUrl')
+            for (let i = 0; i <= inputs.length - 2; i++) {
+              inputs[i].parentNode.remove()
+            }
             this.temp.minorFileList = ''
-          })
-          .catch((e) => console.log('次要', e.response.data.message))
-      } else {
-        this.product.imagesUrl = [...this.temp.minorImgUrls]
-        this.temp.minorImgUrls = ''
-      }
+          } else {
+            // mainImg
+            this.product.imageUrl = i.data.imageUrl
+            // free memory
+            URL.revokeObjectURL(this.temp.mainImgLocal)
+            this.temp.mainImgLocal = ''
+            this.temp.minorFileList = {}
+          }
+        }
+        this.imgUploading = false
+      }).catch(() => {
+        this.imgUploading = false
+      })
     },
     emit() {
       if (this.product.price < 0 || this.product.origin_price < 0) {
