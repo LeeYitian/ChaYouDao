@@ -1,0 +1,434 @@
+// favorite basic
+%favorite {
+  position: absolute;
+  top: 5px;
+  z-index: 2;
+  font-size: 30px;
+  cursor: pointer;
+  text-shadow: 1px 1px 5px #333;
+  &.bi-heart {
+    color: white;
+  }
+  &.bi-heart-fill {
+    color: $danger;
+  }
+}
+
+// 基礎頁、覽導列
+.index-nav {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  font-size: 1.5rem;
+  z-index: 4;
+  overflow: auto;
+  transition: 0.5s ease;
+  .brand {
+    font-size: 1.8rem;
+    writing-mode: vertical-lr;
+  }
+  .material-symbols-outlined {
+    font-size: 1.8rem;
+    transform: rotate(270deg);
+  }
+}
+.index-view,
+.index-footer {
+  margin-left: 64px;
+  transition: 0.5s ease;
+}
+.offCanvasNav {
+  .delete-cart {
+    cursor: pointer;
+  }
+}
+.go-top {
+  width: 60px;
+  height: 60px;
+  background-color: adjust-color($yellowmetal, $alpha: -0.5);
+  z-index: 5;
+  cursor: pointer;
+}
+
+// 首頁
+.index-coupon-counter {
+  margin-left: 64px;
+  transition: 0.5s ease;
+  z-index: 3;
+}
+
+#indexCarousel {
+  .carousel-item {
+    img {
+      height: 500px;
+      object-fit: cover;
+      object-position: center center;
+      @media (max-width: 576px) {
+        height: 200px;
+      }
+    }
+    &:nth-child(3) {
+      background: $darkgreen;
+      img {
+        object-fit: contain;
+      }
+    }
+    &:nth-child(4) {
+      @media (max-width: 900px) and (min-width: 600px) {
+        img {
+          object-position: -120px center;
+        }
+      }
+    }
+  }
+}
+.index-bg {
+  background: {
+    image: url('@/assets/img/beanstalk.webp');
+  }
+}
+.tea-intro {
+  img {
+    height: 300px;
+    width: 300px;
+    object-fit: cover;
+    object-position: center bottom;
+    transform: translateX(160px) rotate(20deg);
+    opacity: 0;
+    transition: 0.8s ease;
+    @media (max-width: 576px) {
+      height: 200px;
+      width: 200px;
+      transform: translateX(50px) rotate(20deg);
+    }
+  }
+  p {
+    opacity: 0;
+    transform: translateX(-200px);
+    transition: 0.8s ease;
+    &.show {
+      opacity: 1;
+      transform: translateX(0px);
+    }
+  }
+}
+.tea-intro-second {
+  img {
+    object-position: center center;
+    transform: translateX(-160px) rotate(345deg);
+    @media (max-width: 576px) {
+      height: 200px;
+      width: 200px;
+      transform: translateX(-100px) rotate(345deg);
+    }
+  }
+  p {
+    opacity: 0;
+    transform: translateX(200px);
+    transition: 0.8s ease;
+  }
+}
+
+.sales-intro {
+  background: {
+    image: url('@/assets/img/food-photographer-spT_zb4bHro-unsplash.jpg');
+    attachment: fixed;
+    size: cover;
+    position: center center;
+  }
+  height: 600px;
+  .row {
+    transform: translateY(25%);
+  }
+  .sales-intro-text {
+    background: adjust-color($primary, $alpha: -0.4);
+  }
+}
+
+.dessert-intro {
+  min-height: 400px;
+  background: {
+    image: url('@/assets/img/ulysse-pointcheval-1WmlAiYgnoI-unsplash.jpg');
+    size: cover;
+    position: 155px 52%;
+    repeat: no-repeat;
+  }
+  h2 {
+    color: transparent;
+    background: {
+      image: url('@/assets/img/ulysse-pointcheval-1WmlAiYgnoI-unsplash.jpg');
+      clip: text;
+      position: 70% 70%;
+      attachment: fixed;
+    }
+  }
+}
+
+.farmer-intro {
+  .card {
+    img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+    }
+  }
+}
+
+.sales-product-row {
+  i {
+    display: none;
+  }
+}
+
+.sales-product-row {
+  .arrow-glow {
+    display: inline-block;
+    animation-name: glow;
+    animation-duration: 2s;
+    animation-timing-function: ease;
+    animation-iteration-count: infinite;
+  }
+}
+@keyframes glow {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+// 產品列表
+.indexProduct-bp {
+  position: relative;
+  height: 250px;
+  background: {
+    image: url('@/assets/img/alice-pasqual-59Kh3TAajg0-unsplash.jpg');
+    size: cover;
+    repeat: no-repeat;
+    position: -206px -50px;
+    attachment: fixed;
+  }
+  @media (min-width: 576px) {
+    background: {
+      position: 28px -115px;
+    }
+  }
+  h1 {
+    position: absolute;
+    right: 0;
+    bottom: -50px;
+    background-color: adjust-color($color: $green, $alpha: -0.3);
+  }
+}
+.indexProduct-main {
+  background: {
+    image: url('@/assets/img/beanstalk.webp');
+  }
+  .indexProduct-sublist {
+    li {
+      list-style: none;
+      margin-bottom: 10px;
+    }
+    a {
+      font-size: 1.1rem;
+    }
+  }
+}
+.indexProduct-items {
+  .card {
+    height: 470px;
+    img {
+      height: 45%;
+      object-fit: cover;
+      flex: 0 0 auto;
+    }
+    a {
+      cursor: pointer;
+    }
+    i {
+      @extend %favorite;
+      right: 5px;
+    }
+  }
+}
+
+// 產品細節
+.details-bp {
+  padding-top: 8%;
+  padding-bottom: 8%;
+  background: {
+    image: url('@/assets/img/akash-kannan-ZsfmwFv-XOY-unsplash.jpg');
+    size: cover;
+    attachment: fixed;
+    position: center bottom;
+  }
+}
+.details-main {
+  width: 90%;
+  margin: 0 auto;
+  background-color: $lightbrown;
+  box-shadow: 0px 0px 20px 18px adjust-color($color: #333, $alpha: -0.6);
+  border-radius: 10px;
+  article > i {
+    @extend %favorite;
+    right: 15px;
+    &::after {
+      content: '最愛';
+      position: absolute;
+      bottom: 80%;
+      left: 10%;
+      font-size: 10px;
+      width: 30px;
+      font-style: normal;
+      text-shadow: none;
+    }
+  }
+  img {
+    width: 100%;
+    object-fit: cover;
+    &.img-main {
+      height: 200px;
+      @media (min-width: 992px) {
+        height: 300px;
+      }
+    }
+    &.img-minor {
+      height: 50px;
+      cursor: pointer;
+      @media (min-width: 992px) {
+        height: 80px;
+      }
+    }
+  }
+  .nav-link.active {
+    background: transparent;
+    box-shadow: 0px -3px 10px -4px #333;
+    border-color: transparent;
+  }
+  .indexProduct-items {
+    height: 250px;
+    .card {
+      height: 100%;
+      img {
+        height: 55%;
+        object-fit: cover;
+        flex: 0 0 auto;
+      }
+      .card-body {
+        background: white;
+        border-radius: 0 0 10px 10px;
+        margin-top: -10px;
+      }
+    }
+    .related-none {
+      display: none;
+    }
+  }
+}
+
+// 文章列表
+.indexArticle-bg {
+  background: {
+    image: url('@/assets/img/beanstalk.webp');
+  }
+}
+.indexArticle-list {
+  background: {
+    image: linear-gradient(290deg, $lightbrown 70%, transparent 70%);
+  }
+  .list-group-item {
+    background: adjust-color($color: white, $alpha: -0.5);
+    &.active {
+      background-color: $success;
+      border-color: $success;
+    }
+  }
+  .article-button {
+    transform: translateY(-47px);
+    transition: 0.5s ease;
+  }
+}
+
+// 訂單頁面
+.order-nav {
+  &.order-nav-bg {
+    background-image: linear-gradient(
+      45deg,
+      transparent 45%,
+      #d1d1d1 45%,
+      #d1d1d1 55%,
+      transparent 55%
+    );
+    background-size: 20px 20px;
+    background-repeat: repeat;
+  }
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 1;
+  }
+}
+.order-table {
+  img {
+    height: 80px;
+    width: 80px;
+    object-fit: cover;
+    @media (min-width: 990px) and (max-width: 1200px) {
+      height: 50px;
+      width: 50px;
+    }
+  }
+}
+
+// 我的最愛
+.favorite-bp {
+  height: 250px;
+  background-image: url('@/assets/img/colin-roe-H1RWuPMIgBY-unsplash.jpg');
+  position: relative;
+  h1 {
+    background: adjust-color($color: $darkgreen, $alpha:-0.3);
+    position: absolute;
+    bottom: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+.favorite-main {
+  background: url('@/assets/img/beanstalk.webp');
+  .favorite-items {
+    height: 200px;
+    transition: 0.8s ease;
+    transform-style: preserve-3d;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    h5 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      translate: -50% -50%;
+      text-align: center;
+      width: 100%;
+      padding: 30px 0;
+      background-color: adjust-color($color: $altowhite, $alpha: -0.3);
+      backdrop-filter: blur(5px);
+    }
+    &:hover {
+      transform: rotateY(180deg);
+    }
+  }
+  .front,
+  .back {
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+  }
+  .back {
+    transform: rotateY(180deg);
+  }
+}
+
