@@ -3,7 +3,8 @@ module.exports = defineConfig({
   transpileDependencies: true,
   pages: {
     index: {
-      title: '茶友道 ‧ 最貼心的茶伴'
+      entry: 'src/main.js',
+      title: '茶友道．最貼心的茶伴'
     },
   },
   publicPath: '/ChaYouDao/'
