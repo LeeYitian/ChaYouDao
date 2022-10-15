@@ -3,8 +3,6 @@
     class="modal fade modal-xl"
     id="productModal"
     tabindex="-1"
-    aria-labelledby="staticBackdropLabel"
-    aria-hidden="true"
     ref="myModal"
   >
     <div class="modal-dialog modal-dialog-scrollable">
@@ -17,12 +15,11 @@
             type="button"
             class="btn-close btn-close-white"
             @click="dismiss"
-            aria-label="Close"
           ></button>
         </div>
         <div class="modal-body">
           <div class="row">
-            <div class="col-sm-5">
+            <div class="col-lg-5">
               <div class="mb-3">
                 <label for="image" class="form-label">上傳主要圖片</label>
                 <input
@@ -54,7 +51,7 @@
                   class="img-fluid"
                   id="preview"
                   :src="temp.mainImgUrl || temp.mainImgLocal"
-                  alt=""
+                  alt="產品圖片"
                 />
                 <i
                   @click.stop="removeUpload"
@@ -103,7 +100,12 @@
                 <div v-show="minorImgAll !== []" class="row g-1 mb-3">
                   <div v-for="i in minorImgAll" :key="i" class="col-3">
                     <div class="position-relative img-pre">
-                      <img class="img-fluid" id="previews" :src="i" alt="" />
+                      <img
+                        class="img-fluid"
+                        id="previews"
+                        :src="i"
+                        alt="產品圖片"
+                      />
                       <i
                         class="position-absolute top-0 start-100 translate-middle bi bi-x-circle"
                       ></i>
@@ -121,7 +123,7 @@
                 </button>
               </div>
             </div>
-            <div class="col-sm-7">
+            <div class="col-lg-7">
               <div class="mb-3">
                 <label for="title" class="form-label">標題</label>
                 <input
@@ -253,6 +255,7 @@ export default {
   props: ['tempInfo'],
   data() {
     return {
+      key: 0,
       imgUploading: false,
       temp: {
         mainImgUrl: '',
@@ -287,6 +290,12 @@ export default {
         minorFileList: [],
         minorImgLocals: []
       }
+      const inputs = document.querySelectorAll('.minorInputUrl')
+      inputs.forEach((i) => {
+        if (i.value !== '') {
+          i.parentNode.remove()
+        }
+      })
       this.hideModal()
     },
     createImgUrl(e) {
@@ -298,23 +307,23 @@ export default {
       this.temp.mainImgLocal = URL.createObjectURL(e.currentTarget.files[0])
     },
     minorImgUrlUpload(e) {
-      if (this.$refs.minorInputUrl.children[0].value === '') {
+      if (
+        e.currentTarget.value === '' ||
+        !e.currentTarget.value.includes('http')
+      ) {
+        alert('網址不得為空，或網址輸入錯誤')
         return
       } else if (
-        this.temp.minorImgUrls.length + this.temp.minorImgLocals.length >
+        this.temp.minorImgUrls.length + this.temp.minorImgLocals.length >=
         5
       ) {
-        alert('次要圖片上傳總張數為5張（含網址上傳及檔案上傳）')
-        return
-      }
-      this.temp.minorImgUrls.push(e.currentTarget.value)
-      if (this.temp.minorImgUrls.length > 5) {
         alert('次要圖片上傳總張數為5張（含網址上傳及檔案上傳）')
         this.temp.minorImgUrls.pop()
         const inputs = document.getElementsByClassName('minorInputUrl')
         inputs[inputs.length - 1].value = ''
         return
       }
+      this.temp.minorImgUrls.push(e.currentTarget.value)
       // 新增網址輸入框
       const newInput = this.$refs.minorInputUrl.cloneNode(true)
       newInput.children[0].value = ''
@@ -324,7 +333,7 @@ export default {
     createMinorImgUrl(e) {
       if (
         e.currentTarget.files.length > 5 ||
-        e.currentTarget.files.length > 5 - this.temp.minorImgUrls.length
+        e.currentTarget.files.length > (5 - this.temp.minorImgUrls.length)
       ) {
         alert('次要圖片上傳總張數為5張（含網址上傳及檔案上傳）')
         e.currentTarget.value = ''
@@ -363,10 +372,11 @@ export default {
             if (this.temp.minorImgUrls.indexOf(src) >= 0) {
               index = this.temp.minorImgUrls.indexOf(src)
               this.temp.minorImgUrls.splice(index, 1)
-              const inputs = document.getElementsByClassName('minorInputUrl')
+              const inputs = document.querySelectorAll('.minorInputUrl')
               for (const i of inputs) {
                 if (i.value === src) {
                   i.parentNode.remove()
+                  break
                 }
               }
             } else {
@@ -408,45 +418,50 @@ export default {
       } else {
         this.product.imagesUrl = [...this.temp.minorImgUrls]
         this.temp.minorImgUrls = []
-        const inputs = document.getElementsByClassName('minorInputUrl')
-        for (let i = 0; i <= inputs.length - 2; i++) {
-          inputs[i].parentNode.remove()
-        }
+        const inputs = document.querySelectorAll('.minorInputUrl')
+        inputs.forEach((i) => {
+          if (i.value !== '') {
+            i.parentNode.remove()
+          }
+        })
         this.imgUploading = false
       }
-      Promise.all(allImgPromise).then((res) => {
-        for (const i of res) {
-          if (Array.isArray(i)) {
-            // minorImg
-            this.product.imagesUrl = []
-            if (this.temp.minorImgUrls.length > 0) {
-              this.product.imagesUrl = [...this.temp.minorImgUrls]
+      Promise.all(allImgPromise)
+        .then((res) => {
+          for (const i of res) {
+            if (Array.isArray(i)) {
+              // minorImg
+              this.product.imagesUrl = []
+              if (this.temp.minorImgUrls.length > 0) {
+                this.product.imagesUrl = [...this.temp.minorImgUrls]
+              }
+              i.forEach((i) => {
+                this.product.imagesUrl.push(i.data.imageUrl)
+              })
+              // free memory
+              this.temp.minorImgLocals.forEach((i) => URL.revokeObjectURL(i))
+              this.temp.minorImgLocals = []
+              this.temp.minorImgUrls = []
+              const inputs = document.getElementsByClassName('minorInputUrl')
+              for (let i = 0; i <= inputs.length - 2; i++) {
+                inputs[i].parentNode.remove()
+              }
+              this.temp.minorFileList = ''
+            } else {
+              // mainImg
+              this.product.imageUrl = i.data.imageUrl
+              // free memory
+              URL.revokeObjectURL(this.temp.mainImgLocal)
+              this.temp.mainImgLocal = ''
+              this.temp.minorFileList = {}
             }
-            i.forEach((i) => {
-              this.product.imagesUrl.push(i.data.imageUrl)
-            })
-            // free memory
-            this.temp.minorImgLocals.forEach((i) => URL.revokeObjectURL(i))
-            this.temp.minorImgLocals = []
-            this.temp.minorImgUrls = []
-            const inputs = document.getElementsByClassName('minorInputUrl')
-            for (let i = 0; i <= inputs.length - 2; i++) {
-              inputs[i].parentNode.remove()
-            }
-            this.temp.minorFileList = ''
-          } else {
-            // mainImg
-            this.product.imageUrl = i.data.imageUrl
-            // free memory
-            URL.revokeObjectURL(this.temp.mainImgLocal)
-            this.temp.mainImgLocal = ''
-            this.temp.minorFileList = {}
           }
-        }
-        this.imgUploading = false
-      }).catch(() => {
-        this.imgUploading = false
-      })
+          this.imgUploading = false
+        })
+        .catch((e) => {
+          console.log(e)
+          this.imgUploading = false
+        })
     },
     emit() {
       if (this.product.price < 0 || this.product.origin_price < 0) {
@@ -455,7 +470,7 @@ export default {
       }
       const updateProduct = { ...this.product }
       this.$emit('update-product', updateProduct)
-      this.hideModal()
+      this.dismiss()
     }
   },
   mounted() {

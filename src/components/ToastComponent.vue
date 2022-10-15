@@ -2,8 +2,6 @@
   <div
     class="toast"
     role="alert"
-    aria-live="assertive"
-    aria-atomic="true"
     ref="toast"
   >
     <div

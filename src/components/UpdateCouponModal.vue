@@ -3,8 +3,6 @@
     class="modal fade updateCoupon"
     id="UpdateCouponModal"
     tabindex="-1"
-    aria-labelledby="staticBackdropLabel"
-    aria-hidden="true"
     ref="myModal"
   >
     <div class="modal-dialog modal-dialog-scrollable">
@@ -17,7 +15,6 @@
             type="button"
             class="btn-close btn-close-white"
             data-bs-dismiss="modal"
-            aria-label="Close"
           ></button>
         </div>
         <div class="modal-body">
@@ -49,7 +46,6 @@
                   type="number"
                   min="0"
                   max="100"
-                  step="1"
                   id="couponPercent"
                 />
                 <span class="input-group-text">%</span>

@@ -3,8 +3,6 @@
     class="modal fade"
     id="deleteModal"
     tabindex="-1"
-    aria-labelledby="deleteProdut"
-    aria-hidden="true"
     ref="myModal"
   >
     <div class="modal-dialog">
@@ -15,11 +13,10 @@
             type="button"
             class="btn-close bg-light"
             data-bs-dismiss="modal"
-            aria-label="Close"
           ></button>
         </div>
         <div class="modal-body">
-          <p>刪除： {{tempInfo.title}}（刪除後將無法復原）</p>
+          <p>刪除： {{tempInfo.title || `訂單${tempInfo.id}`}}（刪除後將無法復原）</p>
         </div>
         <div class="modal-footer">
           <button

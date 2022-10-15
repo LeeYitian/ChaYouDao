@@ -48,6 +48,9 @@ export default {
   },
   created() {
     this.checkToken()
+  },
+  beforeUpdate() {
+    this.checkToken()
   }
 }
 </script>

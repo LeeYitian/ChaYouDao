@@ -3,8 +3,6 @@
     class="modal fade modal-xl updateArticle"
     id="UpdateOrderModal"
     tabindex="-1"
-    aria-labelledby="staticBackdropLabel"
-    aria-hidden="true"
     ref="myModal"
   >
     <div class="modal-dialog modal-dialog-scrollable">
@@ -16,13 +14,12 @@
           <button
             type="button"
             class="btn-close btn-close-white"
-            aria-label="Close"
             @click="dismiss"
           ></button>
         </div>
         <div class="modal-body">
           <div class="row">
-            <div class="col-4 mb-3">
+            <div class="col-lg-4 mb-3">
               <label for="articleDate">建立日期</label>
               <input
                 v-model="article.create_at"
@@ -31,7 +28,7 @@
                 id="articleDate"
               />
             </div>
-            <div class="col-4 mb-3">
+            <div class="col-lg-4 mb-3">
               <label for="articleTitle">標題</label>
               <input
                 v-model="article.title"
@@ -40,7 +37,7 @@
                 id="articleTitle"
               />
             </div>
-            <div class="col-4 mb-3">
+            <div class="col-lg-4 mb-3">
               <label for="articleAuthor">作者</label>
               <input
                 v-model="article.author"
@@ -49,13 +46,14 @@
                 id="articleAuthor"
               />
             </div>
-            <div class="col-6">
+            <div class="col-lg-6">
               <label class="form-label" for="articleImg">圖片</label>
               <input
                 v-model="article.image"
                 class="form-control mb-3"
                 type="url"
                 id="articleImg"
+                placeholder="請輸入圖片網址"
               />
               <img :src="article.image" class="img-fluid" alt="" />
               <label for="articleTag">標籤</label>
@@ -66,7 +64,7 @@
                 placeholder="#標籤一、#標籤二......"
               ></textarea>
             </div>
-            <div class="col-6">
+            <div class="col-lg-6">
               <label for="articleDescription">摘要</label>
               <textarea
                 v-model="article.description"
@@ -116,6 +114,7 @@
 
 <script>
 import modalMixin from '@/mixins/modalMixin'
+
 export default {
   mixins: [modalMixin],
   props: ['tempInfo'],

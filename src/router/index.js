@@ -3,27 +3,45 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 const routes = [
   {
     path: '/login',
-    component: () => import('../views/LoginPage.vue')
+    component: () => import('../views/LoginPage.vue'),
+    meta: {
+      title: '登入 | 茶友道後台管理系統'
+    }
   },
   {
     path: '/dashboard',
     component: () => import('../views/DashboardPage.vue'),
+    meta: {
+      title: '茶友道後台管理系統'
+    },
     children: [
       {
         path: 'products',
-        component: () => import('../views/ProductsList.vue')
+        component: () => import('../views/ProductsList.vue'),
+        meta: {
+          title: '產品 | 茶友道後台管理系統'
+        }
       },
       {
         path: 'orders',
-        component: () => import('../views/OrdersList.vue')
+        component: () => import('../views/OrdersList.vue'),
+        meta: {
+          title: '訂單 | 茶友道後台管理系統'
+        }
       },
       {
         path: 'coupons',
-        component: () => import('../views/CouponsList.vue')
+        component: () => import('../views/CouponsList.vue'),
+        meta: {
+          title: '優惠券 | 茶友道後台管理系統'
+        }
       },
       {
         path: 'articles',
-        component: () => import('../views/ArticlesList.vue')
+        component: () => import('../views/ArticlesList.vue'),
+        meta: {
+          title: '文章 | 茶友道後台管理系統'
+        }
       }
     ]
   },
@@ -40,7 +58,10 @@ const routes = [
         component: () => import('../views/IndexProduct.vue'),
         redirect: {
           path: '/product/all',
-          component: () => import('../views/IndexProductSelect.vue')
+          component: () => import('../views/IndexProductSelect.vue'),
+          meta: {
+            title: '茶葉 ‧ 茶具 ‧ 茶點 ‧ 茶友道'
+          }
         },
         children: [
           {
@@ -72,6 +93,9 @@ const routes = [
       {
         path: 'article',
         component: () => import('../views/IndexArticle.vue'),
+        meta: {
+          title: '文章 ‧ 茶友道 ‧ 不只喝茶還要懂茶'
+        },
         children: [
           {
             path: ':id',
@@ -81,17 +105,26 @@ const routes = [
       },
       {
         path: 'favorite',
-        component: () => import('../views/IndexFavorite.vue')
+        component: () => import('../views/IndexFavorite.vue'),
+        meta: {
+          title: '你的最愛 | 茶友道 ‧ 最貼心的茶伴'
+        }
       },
       {
         path: 'details/:id',
-        component: () => import('../views/IndexProductDetails.vue')
+        component: () => import('../views/IndexProductDetails.vue'),
+        meta: {
+          title: '產品介紹 | 茶葉 ‧ 茶具 ‧ 茶點 ‧ 茶友道'
+        }
       }
     ]
   },
   {
     path: '/order',
     component: () => import('../views/IndexOrder.vue'),
+    meta: {
+      title: '訂單 | 茶友道 ● 最貼心的茶伴'
+    },
     children: [
       {
         path: '',
@@ -120,6 +153,11 @@ const router = createRouter({
   scrollBehavior(to, from, savedPosition) {
     return { top: 0 }
   }
+})
+const defaultTitle = '茶友道 ‧ 最貼心的茶伴'
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title ? to.meta.title : defaultTitle
+  next()
 })
 
 export default router

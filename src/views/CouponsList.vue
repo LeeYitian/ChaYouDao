@@ -7,21 +7,21 @@
     >
       新增優惠券
     </button>
-    <div class="table-responsive-md">
+    <div class="table-responsive-lg">
       <table class="table table-hover text-primary mt-2 dashboard-table">
         <thead class="border-bottom border-light border-2 text-bg-darkgreen">
           <tr>
-            <th width="120">名稱</th>
-            <th width="120">優惠</th>
-            <th width="120">到期日</th>
-            <th width="120">啟用</th>
-            <th width="200" class="text-center">編輯</th>
+            <th width="120" class="text-center">名稱</th>
+            <th width="120" class="text-center">優惠</th>
+            <th width="120" class="text-center">到期日</th>
+            <th width="120" class="text-center">啟用</th>
+            <th width="120" class="text-center">編輯</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="i in coupons" :key="i.id" class="align-middle">
             <td>{{ i.title }}</td>
-            <td class="text-right">{{ `${i.percent} %` }}</td>
+            <td class="text-end">{{ `${i.percent} %` }}</td>
             <td>{{ $filters.date(i.due_date) }}</td>
             <td>
               <span v-if="i.is_enabled" class="text-success">啟用</span>
@@ -64,13 +64,11 @@
 </template>
 
 <script>
-import checkToken from '@/mixins/checkToken.js'
 import UpdateCouponModal from '@/components/UpdateCouponModal.vue'
 import DeleteModal from '@/components/DeleteModal.vue'
 
 export default {
   inject: ['emitter'],
-  mixins: [checkToken],
   emits: ['loading'],
   data() {
     return {
@@ -89,6 +87,7 @@ export default {
       this.$emit('loading', true)
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupons?page=${page}`
       this.$http.get(url).then((res) => {
+        this.$emit('loading', false)
         const { coupons, pagination } = res.data
         this.coupons = coupons
         this.pagination = pagination
@@ -97,8 +96,7 @@ export default {
           event: '取得優惠券列表'
         }
         this.emitter.emit('toastMsg', toastMsg)
-        this.$emit('loading', false)
-      })
+      }).catch(e => console.log(e))
     },
     adjustCoupon(info, e) {
       e.currentTarget.textContent.trim() === '編輯'
@@ -137,10 +135,9 @@ export default {
           ...res.data,
           event: '新增／更新優惠券'
         }
-        this.$emit('loading', false)
         this.emitter.emit('toastMsg', toastMsg)
         this.getCoupon()
-      })
+      }).catch(e => console.log(e))
     },
     erase(deleteCoupon) {
       this.$emit('loading', true)
@@ -150,10 +147,9 @@ export default {
           ...res.data,
           event: '刪除優惠券'
         }
-        this.$emit('loading', false)
         this.emitter.emit('toastMsg', toastMsg)
         this.getCoupon()
-      })
+      }).catch(e => console.log(e))
     }
   },
   created() {

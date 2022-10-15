@@ -1,38 +1,29 @@
 <template>
   <nav class="navbar navbar-expand-lg bg-light manage-nav">
     <div class="container-fluid">
-      <a class="navbar-brand text-primary fw-bold" href="#"
+      <router-link to="/" class="navbar-brand text-primary fw-bold"
         ><span class="material-symbols-outlined me-1">
           temp_preferences_eco </span
-        >茶友道</a
+        >茶友道</router-link
       >
-      <button
-        class="navbar-toggler"
-        type="button"
-        @click="showCollapse"
-        aria-controls="navbarNavAltMarkup"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
+      <button class="navbar-toggler" type="button" @click="showCollapse">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav w-100">
-          <router-link
-            to="/dashboard/products"
-            class="nav-link"
-            aria-current="page"
+          <router-link to="/dashboard/products" class="nav-link"
             >產品管理</router-link
           >
-          <router-link to="/dashboard/orders" class="nav-link">訂單管理</router-link>
-          <router-link to="/dashboard/coupons" class="nav-link">優惠券管理</router-link>
-          <router-link to="/dashboard/articles" class="nav-link">文章管理</router-link>
-          <a
-            class="nav-link ms-auto"
-            href="#"
-            @click.prevent="logout"
-            >登出</a
+          <router-link to="/dashboard/orders" class="nav-link"
+            >訂單管理</router-link
           >
+          <router-link to="/dashboard/coupons" class="nav-link"
+            >優惠券管理</router-link
+          >
+          <router-link to="/dashboard/articles" class="nav-link"
+            >文章管理</router-link
+          >
+          <a class="nav-link ms-auto" href="#" @click.prevent="logout">登出</a>
         </div>
       </div>
     </div>
@@ -59,7 +50,7 @@ export default {
         document.cookie = 'finalVue=; expires=Thu, 01 Jan 1970 00:00:00 UTC;'
         alert('已成功登出')
         this.$router.push('/login')
-      })
+      }).catch(e => console.log(e))
     }
   },
   emits: ['loading'],

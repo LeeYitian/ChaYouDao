@@ -53,7 +53,7 @@
                   <button
                     type="button"
                     class="btn btn-lightbrown d-none d-sm-block"
-                    @click="i.qty--, updateCart(i.id, i.qty)"
+                    @click="i.qty === 0 ? i.qty = 0:i.qty--, updateCart(i.id, i.qty)"
                     :disabled="updating"
                   >
                     －
@@ -322,9 +322,20 @@ export default {
       this.updating = true
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
       this.$http.get(url).then((res) => {
+        if (!res.data.success) {
+          const toastMsg = {
+            state: res.data.success,
+            action: '購物車',
+            msg: res.data.message
+          }
+          this.emitter.emit('indexToastMsg', toastMsg)
+          this.updating = false
+          return
+        }
         if (res.data.data.carts.length === 0) {
           alert('購物車內無商品')
           this.$router.back()
+          return
         }
         this.carts = res.data.data.carts
         this.final_total = res.data.data.final_total

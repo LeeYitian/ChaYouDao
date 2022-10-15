@@ -115,6 +115,11 @@ export default {
           this.isLoading = false
           return
         }
+        if (!res.data.ordel) {
+          alert('訂單不存在')
+          this.$router.push('/')
+          return
+        }
         this.create_at = res.data.order.create_at
         this.orderProducts = []
         for (const i in res.data.order.products) {

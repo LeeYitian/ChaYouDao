@@ -7,16 +7,16 @@
     >
       新增文章
     </button>
-    <div class="table-responsive-md">
+    <div class="table-responsive-lg">
       <table class="table table-hover text-primary mt-2 dashboard-table">
         <thead class="border-bottom border-light border-2 text-bg-darkgreen">
           <tr>
-            <th>建立時間</th>
-            <th>標題</th>
-            <th>作者</th>
-            <th width="250">摘要</th>
-            <th>公開</th>
-            <th width="200" class="text-center">編輯</th>
+            <th width="120" class="text-center">建立時間</th>
+            <th width="120" class="text-center">標題</th>
+            <th width="80" class="text-center">作者</th>
+            <th width="300" class="text-center">摘要</th>
+            <th width="80" class="text-center">公開</th>
+            <th width="120" class="text-center">編輯</th>
           </tr>
         </thead>
         <tbody>
@@ -66,13 +66,11 @@
 </template>
 
 <script>
-import checkToken from '@/mixins/checkToken.js'
 import UpdateArticleModal from '@/components/UpdateArticleModal.vue'
 import DeleteModal from '@/components/DeleteModal.vue'
 
 export default {
   inject: ['emitter'],
-  mixins: [checkToken],
   emits: ['loading'],
   data() {
     return {
@@ -91,6 +89,7 @@ export default {
       this.$emit('loading', true)
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/articles?page=${page}`
       this.$http.get(url).then((res) => {
+        this.$emit('loading', false)
         const { articles, pagination } = res.data
         this.articles = articles
         this.pagination = pagination
@@ -99,8 +98,7 @@ export default {
           event: '取得文章列表'
         }
         this.emitter.emit('toastMsg', toastMsg)
-        this.$emit('loading', false)
-      })
+      }).catch(e => console.log(e))
     },
     adjustAritcle(info, e) {
       e.currentTarget.textContent.trim() === '編輯'
@@ -152,10 +150,9 @@ export default {
           ...res.data,
           event: '新增／修改文章'
         }
-        this.$emit('loading', false)
         this.emitter.emit('toastMsg', toastMsg)
         this.getArticle()
-      })
+      }).catch(e => console.log(e))
     },
     erase(deleteArticle) {
       this.$emit('loading', true)
@@ -165,10 +162,9 @@ export default {
           ...res.data,
           event: '刪除文章'
         }
-        this.$emit('loading', false)
         this.emitter.emit('toastMsg', toastMsg)
         this.getArticle()
-      })
+      }).catch(e => console.log(e))
     }
   },
   created() {
