@@ -16,7 +16,7 @@
 <style>
 @media (max-width: 576px) {
   .hide-nav {
-    transform: translateX(-60px);
+    transform: translateX(-45px);
   }
   .hide-nav-view {
     margin-left: 0px;

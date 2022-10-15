@@ -154,7 +154,7 @@ export default {
     },
     toggleCollapse() {
       this.collapse.forEach((i) => i.toggle())
-      setTimeout(() => this.hideCollapse(), 500)
+      setTimeout(() => this.hideCollapse(), 1000)
     },
     hideCollapse() {
       this.collapse.forEach((i) => i.hide())

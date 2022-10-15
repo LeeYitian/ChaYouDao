@@ -60,7 +60,7 @@ const routes = [
           path: '/product/all',
           component: () => import('../views/IndexProductSelect.vue'),
           meta: {
-            title: '茶葉 ‧ 茶具 ‧ 茶點 ‧ 茶友道'
+            title: '茶葉．茶具．茶點．茶友道'
           }
         },
         children: [
@@ -94,7 +94,7 @@ const routes = [
         path: 'article',
         component: () => import('../views/IndexArticle.vue'),
         meta: {
-          title: '文章 ‧ 茶友道 ‧ 不只喝茶還要懂茶'
+          title: '文章．茶友道．不只喝茶還要懂茶'
         },
         children: [
           {
@@ -107,14 +107,14 @@ const routes = [
         path: 'favorite',
         component: () => import('../views/IndexFavorite.vue'),
         meta: {
-          title: '你的最愛 | 茶友道 ‧ 最貼心的茶伴'
+          title: '你的最愛 | 茶友道．最貼心的茶伴'
         }
       },
       {
         path: 'details/:id',
         component: () => import('../views/IndexProductDetails.vue'),
         meta: {
-          title: '產品介紹 | 茶葉 ‧ 茶具 ‧ 茶點 ‧ 茶友道'
+          title: '產品介紹 | 茶葉．茶具．茶點．茶友道'
         }
       }
     ]
@@ -123,7 +123,7 @@ const routes = [
     path: '/order',
     component: () => import('../views/IndexOrder.vue'),
     meta: {
-      title: '訂單 | 茶友道 ● 最貼心的茶伴'
+      title: '訂單 | 茶友道．最貼心的茶伴'
     },
     children: [
       {
@@ -154,7 +154,7 @@ const router = createRouter({
     return { top: 0 }
   }
 })
-const defaultTitle = '茶友道 ‧ 最貼心的茶伴'
+const defaultTitle = '茶友道．最貼心的茶伴'
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title ? to.meta.title : defaultTitle
   next()

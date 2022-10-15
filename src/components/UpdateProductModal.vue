@@ -275,6 +275,13 @@ export default {
   watch: {
     tempInfo(n, o) {
       this.product = { ...n }
+      this.temp = {
+        mainImgUrl: '',
+        mainImgLocal: '',
+        minorImgUrls: [],
+        minorFileList: [],
+        minorImgLocals: []
+      }
       if (this.product.imagesUrl) {
         this.temp.minorImgUrls = [...this.product.imagesUrl]
       }

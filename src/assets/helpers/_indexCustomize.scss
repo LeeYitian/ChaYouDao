@@ -34,7 +34,7 @@
 }
 .index-view,
 .index-footer {
-  margin-left: 64px;
+  margin-left: 51px;
   transition: 0.5s ease;
 }
 .offCanvasNav {
@@ -52,7 +52,7 @@
 
 // 首頁
 .index-coupon-counter {
-  margin-left: 64px;
+  margin-left: 51px;
   transition: 0.5s ease;
   z-index: 3;
 }
@@ -220,7 +220,7 @@
   h1 {
     position: absolute;
     right: 0;
-    bottom: -50px;
+    bottom: -35px;
     background-color: adjust-color($color: $green, $alpha: -0.3);
   }
 }
@@ -408,9 +408,7 @@
     }
     h5 {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      translate: -50% -50%;
+      top: 25%;
       text-align: center;
       width: 100%;
       padding: 30px 0;

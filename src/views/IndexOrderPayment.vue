@@ -115,7 +115,7 @@ export default {
           this.isLoading = false
           return
         }
-        if (!res.data.ordel) {
+        if (!res.data.order) {
           alert('訂單不存在')
           this.$router.push('/')
           return
