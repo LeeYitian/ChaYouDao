@@ -4,10 +4,15 @@
     ref="coupounCounter"
   >
     <div class="d-flex flex-column flex-sm-row flex-grow-1 me-2">
-      <div class="text-white fs-4 fw-bold d-inline-block">
+      <div class="text-white fs-4 fw-bold d-inline-block position-relative">
         <span class="d-none d-sm-inline">永遠的周日慶──</span
         ><span v-if="counter !== '已結束'">優惠倒數 </span
         ><span>{{ counter }}</span>
+        <button
+      type="button"
+      class="position-absolute end-0 d-inline-block d-sm-none btn-close"
+      @click="this.$refs.coupounCounter.style.visibility = 'hidden'"
+    ></button>
       </div>
       <button
         v-if="counter === '已結束'"
@@ -28,7 +33,7 @@
     </div>
     <button
       type="button"
-      class="btn-close ms-auto"
+      class="d-none d-sm-block btn-close ms-auto"
       @click="this.$refs.coupounCounter.style.visibility = 'hidden'"
     ></button>
   </div>

@@ -189,7 +189,6 @@
                 id="userPhone"
                 label="手機"
                 name="userPhone"
-                placeholder="09xx-xxx-xxx"
                 class="form-control"
                 :class="{
                   'is-invalid': errors['userPhone'],
@@ -197,9 +196,9 @@
                 }"
                 :disabled="orderCreating"
                 :rules="{
-                  length: 12,
+                  length: 10,
                   required: true,
-                  regex: /[0-9]{4}-[0-9]{3}-[0-9]{3}/
+                  regex: /[0-9]{10}/
                 }"
               />
               <ErrorMessage

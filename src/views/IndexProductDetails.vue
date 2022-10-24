@@ -239,10 +239,10 @@ export default {
         }
         this.placeholder = false
         this.product = res.data.product
-        // 取得了資料但還是要一點時間才能產生 element node...?
-        setTimeout(() => this.createCarousel(), 0)
-        this.createBreadCrumb(res.data.product)
-        this.getRelated(res.data.product.category)
+      }).then(() => {
+        this.createCarousel()
+        this.createBreadCrumb(this.product)
+        this.getRelated(this.product.category)
       })
     },
     getRelated(relate) {

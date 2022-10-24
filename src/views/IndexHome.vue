@@ -1,8 +1,8 @@
 <template>
   <IndexNavbar></IndexNavbar>
   <IndexNotificationToast></IndexNotificationToast>
-  <IndexCouponCounter class="index-coupon-counter hide-index-coupon-counter"></IndexCouponCounter>
-  <router-view class="index-view hide-nav-view" @click="backdrop"></router-view>
+  <IndexCouponCounter class="index-coupon-counter"></IndexCouponCounter>
+  <router-view class="index-view" @click="backdrop"></router-view>
   <div
     class="position-fixed bottom-0 end-0 m-2 text-center rounded go-top"
     @click="scrollTop"
@@ -38,17 +38,17 @@ import IndexCouponCounter from '@/components/IndexCouponCounter.vue'
 import emitter from '@/methods/mitt.js'
 
 export default {
-  data() {
-    return {
-      preScroll: 0
-    }
-  },
   provide() {
     return {
       emitter
     }
   },
   emit: ['click'],
+  data() {
+    return {
+      preScroll: ''
+    }
+  },
   components: {
     IndexNavbar,
     IndexFooter,
@@ -73,7 +73,7 @@ export default {
         document.querySelector('.index-footer').classList.add('hide-footer')
         document.querySelector('.index-coupon-counter').classList.add('hide-index-coupon-counter')
       }
-      this.preScroll = scroll <= 0 ? 0 : scroll
+      this.preScroll = document.body.scrollTop || document.documentElement.scrollTop
     },
     scrollTop() {
       window.scrollTo({

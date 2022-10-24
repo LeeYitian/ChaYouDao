@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="navbar navbar-dark bg-primary flex-column justify-content-center px-1 index-nav hide-nav"
+    class="navbar navbar-dark bg-primary flex-column justify-content-center px-1 index-nav"
     @click="toggleCollapse"
   >
     <div class="navbar-nav flex-column align-items-start h-100">
@@ -41,9 +41,8 @@
       </router-link>
       <a
         class="nav-link mt-auto"
-        :class="{ disabled: carts.length === 0 }"
         role="button"
-        @click="toggleOffcanvas"
+        @click.prevent="toggleOffcanvas"
       >
         <i class="ms-2 bi bi-cart-fill position-relative"
           ><span
@@ -64,7 +63,10 @@
       <button type="button" class="btn-close ms-auto" data-bs-dismiss="offcanvas"></button>
     </div>
     <div class="offcanvas-body d-flex flex-column">
-      <ul class="list-group list-group-flush">
+      <div v-if="carts.length === 0" class="text-center">購物車內無商品<br>
+        <router-link to="/product/all" @click.prevent="toggleOffcanvas">選購去！</router-link>
+      </div>
+      <ul v-if="carts.length !== 0" class="list-group list-group-flush">
         <li
           v-for="i in carts"
           :key="i.id"
@@ -100,7 +102,7 @@
           </div>
         </li>
       </ul>
-      <div
+      <div v-if="carts.length !== 0"
         class="mt-3 border-top border-3 border-primary p-2 text-end"
         :class="{ 'text-muted': updating }"
       >
@@ -110,7 +112,7 @@
         <button
           type="button"
           class="btn btn-outline-danger"
-          :class="{ disabled: updating }"
+          :class="{ disabled: updating || carts.length === 0 }"
           @click="deleteAllCart"
         >
           清空購物車
@@ -118,7 +120,7 @@
         <router-link
           to="/order"
           class="btn btn-primary"
-          :class="{ disabled: updating }"
+          :class="{ disabled: updating || carts.length === 0 }"
           >建立訂單</router-link
         >
       </div>

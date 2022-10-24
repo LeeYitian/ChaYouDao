@@ -34,8 +34,11 @@
 }
 .index-view,
 .index-footer {
-  margin-left: 51px;
+  margin-left: 64px;
   transition: 0.5s ease;
+  @media (max-width: 1350px) {
+    margin-left: 51px;
+  }
 }
 .offCanvasNav {
   .delete-cart {
@@ -52,9 +55,12 @@
 
 // 首頁
 .index-coupon-counter {
-  margin-left: 51px;
+  margin-left: 64px;
   transition: 0.5s ease;
   z-index: 3;
+  @media (max-width: 1350px) {
+    margin-left: 51px;
+  }
 }
 
 #indexCarousel {
