@@ -34,7 +34,7 @@
 <img src="https://upload.cc/i1/2022/11/01/YK9PjC.gif" width="300px">
 
 #### 3. 彈出視窗通知
-<img src="https://upload.cc/i1/2022/10/16/PJEfgR.gif" width="500px">
+<img src="https://upload.cc/i1/2022/10/16/4Kb3wG.gif" width="500px">
 
 #### 4. 倒數條幅
 <img src="https://upload.cc/i1/2022/10/16/vNYuwM.gif" width="500px">
